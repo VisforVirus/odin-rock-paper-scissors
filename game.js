@@ -1,6 +1,23 @@
 
+function createChoice(name){
+    let beats = "";
+    switch(name){
+        case "Rock":
+            beats = "Scissors";
+            break;
+        case "Paper":
+            beats = "Rock";
+            break;
+        case "Scissors":
+            beats = "Paper";
+            break;
+    }
+    return {choice:name,advantage:beats}
+}
+
 function playerChoice(){
-    return prompt("Rock / Paper / Scissors")
+    let vals = prompt("Rock / Paper / Scissors")
+    return createChoice(vals)
 }
 
 function aiChoice(){
@@ -17,11 +34,19 @@ function aiChoice(){
             val2 = "Scissors";
             break;
     }
-    return val2;
+    return createChoice(val2);
 }
 
-function result(playerChoice="",aiChoice=""){
-    return 0;
+function result(playerChoice,aiChoice){
+    if(playerChoice.advantage==aiChoice.choice){
+        return "Player wins";
+    }
+    else if(aiChoice.advantage==playerChoice.choice){
+        return "AI wins";
+    }
+    else{
+        return "Draw"
+    }
 }
 
 function updateElement(id="", val=""){
@@ -29,13 +54,19 @@ function updateElement(id="", val=""){
     element.innerHTML = val
 }
 
-let pChoiceId = "pChoice";
-let aiChoiceID = "aiChoice";
-let resultID = "r";
+for(i = 0; i <5; i++){
 
-let player = playerChoice();
-let ai  = aiChoice();
-let winner = result(1,1);
+    let pChoiceId = "pChoice";
+    let aiChoiceID = "aiChoice";
+    let resultID = "result";
 
-updateElement(pChoiceId,player)
-updateElement(aiChoiceID,ai)
+    let player = playerChoice();
+    let ai  = aiChoice();
+    let winner = result(player,ai);
+
+    updateElement(pChoiceId,player.choice)
+    updateElement(aiChoiceID,ai.choice)
+    updateElement(resultID,winner)
+
+    console.log(winner)
+}
