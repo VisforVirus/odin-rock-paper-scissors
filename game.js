@@ -15,8 +15,8 @@ function createChoice(name){
     return {choice:name,advantage:beats}
 }
 
-function playerChoice(){
-    let vals = prompt("Rock / Paper / Scissors")
+function playerChoice(choice){
+    let vals = choice;
     return createChoice(vals)
 }
 
@@ -54,19 +54,23 @@ function updateElement(id="", val=""){
     element.innerHTML = val
 }
 
-for(i = 0; i <5; i++){
-
     let pChoiceId = "pChoice";
     let aiChoiceID = "aiChoice";
     let resultID = "result";
 
-    let player = playerChoice();
-    let ai  = aiChoice();
-    let winner = result(player,ai);
+    let buttons = document.querySelectorAll('button');
+    buttons.forEach((button) => {
+        button.addEventListener('click', function (e) {
+            let player = playerChoice(e.target.getAttribute('class'));
 
-    updateElement(pChoiceId,player.choice)
-    updateElement(aiChoiceID,ai.choice)
-    updateElement(resultID,winner)
+            let ai  = aiChoice();
+            let winner = result(player,ai);
 
-    console.log(winner)
-}
+            updateElement(aiChoiceID,ai.choice)
+            updateElement(resultID,winner)
+        
+            console.log(winner)
+          }
+        );
+    })
+
